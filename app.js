@@ -4,7 +4,7 @@ const BUSINESS_WHATSAPP = '917439075469';
 const products = [
   {
     id: 'riwaayat-1', name: 'Riwaayat Royal Set', category: 'Riwaayat Collection',
-    originalPrice: 2999, salePrice: 2499, image: 'assets/products/riwaayat.jpg', royal: true,
+    originalPrice: 2999, salePrice: 2499, image: 'assets/products/riwaayat-new.png', royal: true,
     note: 'Riwaayat means tradition. Ruby-pink blossoms flow into a river of emerald green, creating a statement set for the day the whole family gathers around you. Gold-tone finish, ruby-pink and emerald stones, with matching earrings.'
   },
   {
