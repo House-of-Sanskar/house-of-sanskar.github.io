@@ -79,14 +79,14 @@ const products = [
   }
 ];
 let cart = [];
-let currentFilter = 'Necklaces';
+let currentFilter = 'All';
 const collectionViews = {
   All: { categories: null, title: 'All<br />pieces.', kicker: 'Sanskar collection' },
   Necklaces: { categories: ['Necklaces'], title: 'Necklace<br />sets.', kicker: 'Sanskar collection' },
-  Bracelets: { categories: ['Elite Bracelets', 'Bracelet Chains'], title: 'Bracelet<br />edits.', kicker: 'Sanskar collection' },
+  'Elite Bracelets': { categories: ['Elite Bracelets'], title: 'Elite bracelet<br />pieces.', kicker: 'Bracelet edit' },  'Bracelet Chains': { categories: ['Bracelet Chains'], title: 'Bracelet<br />chains.', kicker: 'Bracelet edit' },  Bracelets: { categories: ['Elite Bracelets', 'Bracelet Chains'], title: 'Bracelet<br />edits.', kicker: 'Sanskar collection' },
   'Pendant Sets': { categories: ['Pendant Sets'], title: 'Pendant<br />sets.', kicker: 'Sanskar collection' },
   Riwaayat: { categories: ['Riwaayat Collection'], title: 'Riwaayat<br />collection.', kicker: 'The royal edit' },
-  Earrings: { categories: ['Royal Earrings', 'Earring Sets'], title: 'Earring<br />edits.', kicker: 'Sanskar collection' }
+  'Royal Earrings': { categories: ['Royal Earrings'], title: 'Royal<br />earrings.', kicker: 'Earring edit' },  'Earring Sets': { categories: ['Earring Sets'], title: 'Earring<br />sets.', kicker: 'Earring edit' },  Earrings: { categories: ['Royal Earrings', 'Earring Sets'], title: 'Earring<br />edits.', kicker: 'Sanskar collection' }
 };
 const fmt = value => `₹${Number(value).toLocaleString('en-IN')}`;
 const grid = document.querySelector('#product-grid');
@@ -110,7 +110,7 @@ function productVisual(product, placement = 'product') {
 
 function renderProducts() {
   const selectedView = collectionViews[currentFilter];
-  const shown = selectedView?.categories == null ? products : products.filter(product => selectedView?.categories?.includes(product.category) || product.category === currentFilter);
+  const selectedCategories = selectedView?.categories; const shown = selectedCategories === null ? products : products.filter(product => (selectedCategories ?? [currentFilter]).includes(product.category));
   grid.innerHTML = shown.map(product => `
     <article class="product ${product.royal ? 'product-royal' : ''}">
       <div class="product-image ${product.image ? 'has-photo' : 'image-placeholder'} ${product.royal ? 'royal-image' : ''}" data-quick="${product.id}" role="button" tabindex="0" aria-label="View details for ${product.name}">
@@ -198,4 +198,4 @@ document.querySelector('#search-button').addEventListener('click', () => { const
 document.querySelector('[data-search-close]').addEventListener('click', closeSearch);
 document.querySelector('#product-search').addEventListener('input', event => renderSearch(event.target.value));
 document.querySelector('#search-results').addEventListener('click', event => { const item = event.target.closest('[data-search-product]'); if (item) { closeSearch(); openQuickView(item.dataset.searchProduct); } });
-document.querySelector('#menu-button').addEventListener('click', () => showToast('Shop and About are available above on desktop.'));
+const menuButton = document.querySelector('#menu-button'); const siteNav = document.querySelector('.site-header nav'); menuButton.setAttribute('aria-expanded','false'); menuButton.addEventListener('click',()=>{const open=menuButton.getAttribute('aria-expanded')!=='true';menuButton.setAttribute('aria-expanded',String(open));menuButton.setAttribute('aria-label',open?'Close menu':'Open menu');siteNav.classList.toggle('mobile-open',open);}); siteNav.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{menuButton.setAttribute('aria-expanded','false');siteNav.classList.remove('mobile-open');}));
