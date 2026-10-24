@@ -278,3 +278,17 @@ dialog{max-width:min(900px,calc(100% - 30px));max-height:92vh;overflow-y:auto}
   .gift-threshold{font-size:15px}
   .gift-description{font-size:12px;line-height:1.7}
 }
+
+
+/* Two simple gift thresholds inside the illustrated letter panel. */
+.gift-rewards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0 12px}
+.gift-threshold{display:flex;flex-direction:column;gap:5px;margin:0;padding:12px 14px;border:1px solid #dfcfb1;border-radius:4px;background:rgba(255,255,255,.68);font:500 12px/1.5 'Montserrat',sans-serif;color:#514332}
+.gift-threshold strong{font:800 12px/1.4 'Montserrat',sans-serif;color:#775521}
+.gift-threshold-mystery{background:#241b12;border-color:#241b12;color:#fff8eb}
+.gift-threshold-mystery strong{color:#edcc8e}
+.gift-letter-copy .gift-description{margin:5px 0 11px}
+@media(max-width:760px){
+ .gift-rewards{grid-template-columns:1fr;gap:8px}
+ .gift-threshold{padding:11px 12px;font-size:11px}
+ .gift-threshold strong{font-size:11px}
+}
