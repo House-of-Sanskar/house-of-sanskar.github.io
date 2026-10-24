@@ -199,3 +199,40 @@ dialog{max-width:min(900px,calc(100% - 30px));max-height:92vh;overflow-y:auto}
   justify-content: center;
   background: #f0e9dd;
 }
+
+
+/* Clear tiered gifting offer and moving announcement strip. */
+.announcement{overflow:hidden;white-space:nowrap;padding:0}
+.announcement-track{display:flex;width:max-content;animation:sanskar-offer-marquee 30s linear infinite}
+.announcement-track>span{display:block;flex:0 0 max-content;margin:0;padding:9px 26px;color:#f8eadd}
+.announcement-track b{color:#d9b87b;margin:0 12px;font-weight:700}
+.announcement:hover .announcement-track{animation-play-state:paused}
+@keyframes sanskar-offer-marquee{to{transform:translateX(-50%)}}
+.gift-offer{margin:0 0 30px;padding:clamp(20px,3vw,32px);background:linear-gradient(115deg,#f4ecdd,#fffaf1);border:1px solid #ddc99e;border-left:4px solid #b28a42;color:#30271f}
+.gift-offer-intro{max-width:760px}
+.gift-offer-intro .eyebrow{margin:0 0 8px;color:#9b783e}
+.gift-offer-intro h3{margin:0;font:600 clamp(25px,3vw,36px)/1.1 'Bodoni Moda',serif;letter-spacing:-.035em;color:#17130f}
+.gift-offer-intro>p:last-child{max-width:760px;margin:12px 0 20px;font:500 14px/1.7 'Montserrat',sans-serif;color:#554d43}
+.gift-offer-tiers{display:grid;grid-template-columns:1fr 1.2fr;gap:12px}
+.gift-tier{min-height:76px;display:flex;flex-direction:column;justify-content:center;gap:7px;padding:14px 16px;background:#fffefa;border:1px solid #e2d5c0}
+.gift-tier>span{font:700 10px/1.3 'Montserrat',sans-serif;letter-spacing:.09em;color:#8d6a32}
+.gift-tier>strong{font:700 14px/1.4 'Montserrat',sans-serif;color:#17130f}
+.gift-tier-featured{background:#0b0b0b;border-color:#0b0b0b}
+.gift-tier-featured>span{color:#d9b87b}
+.gift-tier-featured>strong{color:#fffaf1}
+.gift-offer-note{margin:13px 0 0;font:500 11px/1.6 'Montserrat',sans-serif;color:#66594a}
+@media(max-width:760px){
+  .announcement-track{animation-duration:24s}
+  .gift-offer{margin-bottom:24px;padding:19px 16px}
+  .gift-offer-intro>p:last-child{font-size:12px;line-height:1.65;margin:10px 0 15px}
+  .gift-offer-tiers{grid-template-columns:1fr}
+  .gift-tier{min-height:68px;padding:12px 14px}
+  .gift-tier>strong{font-size:13px}
+  .gift-offer-note{font-size:10px}
+}
+@media(prefers-reduced-motion:reduce){
+  .announcement{white-space:normal}
+  .announcement-track{width:auto;display:block;animation:none}
+  .announcement-track>span{display:none}
+  .announcement-track>span:first-child{display:block;white-space:normal;padding:8px 12px;text-align:center;line-height:1.6}
+}
