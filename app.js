@@ -152,7 +152,6 @@ function renderProducts() {
   grid.innerHTML = shown.map(product => `
     <article class="product ${product.royal ? 'product-royal' : ''}">
       <div class="product-image ${product.image ? 'has-photo' : 'image-placeholder'} ${product.royal ? 'royal-image' : ''}" data-quick="${product.id}" role="button" tabindex="0" aria-label="View details for ${product.name}">
-        ${product.royal ? '<span class="royal-ribbon">Riwaayat · The royal edit</span>' : ''}
         ${productVisual(product)}
       </div>
       <div class="product-info">

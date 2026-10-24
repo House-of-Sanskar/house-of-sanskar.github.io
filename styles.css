@@ -26,8 +26,8 @@
 /* Product catalogue: full photos, clear type and transparent sale pricing. */
 .product-image.has-photo,.dialog-art.has-photo{background:#f0e9dd;border:1px solid #e5d8c5}
 .product-photo{display:block;width:100%;height:100%;object-fit:contain;padding:7px}
-.product-royal .product-image.has-photo{background:#241c13;border:1px solid #b28a42}
-.product-royal .product-photo{padding:8px}
+.product-royal .product-image.has-photo{background:#f0e9dd;border:0;padding:0}
+.product-royal .product-photo{padding:0;object-fit:cover}
 .product-info{align-items:flex-start}
 .product-info h3{font:700 14px/1.45 'Montserrat',sans-serif;letter-spacing:-.01em;color:#17130f}
 .product-info p{font:500 11px/1.5 'Montserrat',sans-serif;color:#73675a}
