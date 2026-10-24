@@ -107,3 +107,9 @@ dialog{max-width:min(900px,calc(100% - 30px));max-height:92vh;overflow-y:auto}
 .reveal-on-scroll{opacity:0;transform:translateY(14px);transition:opacity .65s ease,transform .65s cubic-bezier(.2,.65,.3,1)}
 .reveal-on-scroll.is-visible{opacity:1;transform:translateY(0)}
 @media(prefers-reduced-motion:reduce){.reveal-on-scroll,.reveal-on-scroll.is-visible{opacity:1;transform:none;transition:none}}
+
+/* Gentle desktop hover zoom for product photos */
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  .product-image.has-photo .product-photo{transition:transform .55s cubic-bezier(.2,.65,.3,1)}
+  .product-image.has-photo:hover .product-photo{transform:scale(1.035)}
+}
