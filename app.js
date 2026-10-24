@@ -23,9 +23,9 @@ const products = [
     note: 'Jhilmil is the shimmer of diyas on a festival night. Yellow stones set in golden arches catch the light and glow with every step. Gold-tone finish, yellow stones, with matching earrings.'
   },
   {
-    id: 'noor-1', name: 'Noor Lattice Bangle', category: 'Elite Bracelets',
+    id: 'noor-1', name: 'Noor Lattice Bracelet', category: 'Elite Bracelets',
     originalPrice: 1299, salePrice: 999, image: 'assets/products/noor.jpg',
-    note: 'Noor means light. A golden lattice wraps your wrist like a woven ray of sun, studded with clear flowers that sparkle as you move. Gold-tone bangle style with clear floral stones.'
+    note: 'Noor means light. A golden lattice wraps your wrist like a woven ray of sun, studded with clear flowers that sparkle as you move. Gold-tone lattice bracelet with clear floral stones.'
   },
   {
     id: 'neelam-1', name: 'Neelam Blue-Stone Bracelet', category: 'Elite Bracelets',
@@ -39,12 +39,12 @@ const products = [
   },
   {
     id: 'lehar-gold', name: 'Lehar Pendant Set · Gold', category: 'Pendant Sets',
-    originalPrice: 1299, salePrice: 899, image: 'assets/products/lehar-gold.jpg',
+    originalPrice: 1299, salePrice: 899, image: 'assets/products/lehar-silver.jpg',
     note: 'Lehar is a wave. A pearl drop falls through a graceful teardrop frame and ripples as you move. Gold-tone finish with a pearl drop and matching earrings.'
   },
   {
     id: 'lehar-silver', name: 'Lehar Pendant Set · Silver', category: 'Pendant Sets',
-    originalPrice: 1199, salePrice: 799, image: 'assets/products/lehar-silver.jpg',
+    originalPrice: 1199, salePrice: 799, image: 'assets/products/lehar-gold.jpg',
     note: 'Lehar is a wave. A pearl drop falls through a graceful teardrop frame and ripples as you move. Silver-tone finish with a pearl drop and matching earrings.'
   },
   {
