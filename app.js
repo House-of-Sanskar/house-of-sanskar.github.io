@@ -94,7 +94,7 @@ const products = [
   },
   {
     id: 'taara-1', name: 'Taara Bangles', category: 'Bangles',
-    originalPrice: 799, salePrice: 499, image: 'assets/products/taara.jpg',
+    originalPrice: 799, salePrice: 499, image: 'assets/products/taara-new.png', images: ['assets/products/taara-new.png', 'assets/products/taara.jpg'],
     note: 'A pair of gold-finish bangles studded with round, clear stones that twinkle like a sky full of stars. Light to wear, easy to match and perfect for gifting. Comes in a gift-ready box.'
   },
   {
