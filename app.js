@@ -3,6 +3,11 @@ const BUSINESS_WHATSAPP = '917439075469';
 
 const products = [
   {
+    id: 'heartline-set', name: 'Heart Pendant Set', category: 'Pendant Sets',
+    salePrice: 199, image: 'assets/products/heartline.jpg',
+    note: 'A delicate silver-tone heart pendant with a fine chain and matching heart-shaped studs. A sweet, easy-to-wear set for everyday sparkle and thoughtful gifting.'
+  },
+  {
     id: 'riwaayat-1', name: 'Riwaayat Royal Set', category: 'Riwaayat Collection',
     originalPrice: 2999, salePrice: 2499, image: 'assets/products/riwaayat-new.png', royal: true,
     note: 'Riwaayat means tradition. Ruby-pink blossoms flow into a river of emerald green, creating a statement set for the day the whole family gathers around you. Gold-tone finish, ruby-pink and emerald stones, with matching earrings.'
@@ -74,8 +79,8 @@ const products = [
   },
   {
     id: 'heer-1', name: 'Heer Double-Heart Pendant Set', category: 'Pendant Sets',
-    originalPrice: 799, salePrice: 499, image: 'assets/products/heer.jpg',
-    note: 'Heer is a love story in gold. Two hearts hold one green stone close, a gift that says what words cannot. Gold-tone double-heart design with a green centre stone and matching earrings.'
+    originalPrice: 799, salePrice: 559, image: 'assets/products/heer-new.jpg', images: ['assets/products/heer-new.jpg', 'assets/products/heer-detail.jpg'],
+    note: 'Heer is a love story in gold. Ruby-pink sparkle sits within a graceful double-heart design, finished with a fine golden chain and matching earrings. A sweet statement for celebrations or everyday romance.'
   },
   {
     id: 'shagun-1', name: 'Shagun Necklace Set', category: 'Necklaces',
@@ -269,3 +274,46 @@ document.querySelector('#product-search').addEventListener('input', event => ren
 document.querySelector('#search-results').addEventListener('click', event => { const item = event.target.closest('[data-search-product]'); if (item) { closeSearch(); openQuickView(item.dataset.searchProduct); } });
 const menuButton = document.querySelector('#menu-button'); const siteNav = document.querySelector('.site-header nav'); menuButton.setAttribute('aria-expanded','false'); menuButton.addEventListener('click',()=>{const open=menuButton.getAttribute('aria-expanded')!=='true';menuButton.setAttribute('aria-expanded',String(open));menuButton.setAttribute('aria-label',open?'Close menu':'Open menu');siteNav.classList.toggle('mobile-open',open);}); siteNav.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{menuButton.setAttribute('aria-expanded','false');siteNav.classList.remove('mobile-open');}));
 
+
+
+// Rotating editorial hero; pauses while someone is interacting or the tab is hidden.
+(() => {
+  const slides = [...document.querySelectorAll('[data-hero-slide]')];
+  const dots = [...document.querySelectorAll('[data-hero-dot]')];
+  const hero = document.querySelector('.hero-carousel');
+  if (!hero || slides.length < 2) return;
+  let active = 0;
+  const show = index => {
+    active = (index + slides.length) % slides.length;
+    slides.forEach((slide, i) => {
+      const current = i === active;
+      slide.classList.toggle('is-active', current);
+      slide.setAttribute('aria-hidden', String(!current));
+    });
+    dots.forEach((dot, i) => {
+      const current = i === active;
+      dot.classList.toggle('is-active', current);
+      if (current) dot.setAttribute('aria-current', 'true');
+      else dot.removeAttribute('aria-current');
+    });
+  };
+  let timer;
+  const stop = () => window.clearInterval(timer);
+  const start = () => {
+    stop();
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && document.visibilityState === 'visible') timer = window.setInterval(() => show(active + 1), 4200);
+  };
+  dots.forEach(dot => dot.addEventListener('click', () => { show(Number(dot.dataset.heroDot)); start(); }));
+  hero.querySelector('[data-hero-prev]').addEventListener('click', () => { show(active - 1); start(); });
+  hero.querySelector('[data-hero-next]').addEventListener('click', () => { show(active + 1); start(); });
+  hero.addEventListener('mouseenter', stop);
+  hero.addEventListener('mouseleave', start);
+  hero.addEventListener('focusin', stop);
+  hero.addEventListener('focusout', event => { if (!hero.contains(event.relatedTarget)) start(); });
+  document.addEventListener('visibilitychange', start);
+  hero.querySelectorAll('[data-featured-product]').forEach(button => button.addEventListener('click', () => {
+    document.querySelector('#shop').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.setTimeout(() => openQuickView(button.dataset.featuredProduct), 500);
+  }));
+  start();
+})();
