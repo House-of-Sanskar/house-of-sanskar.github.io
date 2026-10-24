@@ -127,3 +127,49 @@ dialog{max-width:min(900px,calc(100% - 30px));max-height:92vh;overflow-y:auto}
   #product-dialog .dialog-art.has-photo>.product-photo,#product-dialog .dialog-art.has-photo .product-gallery .product-photo{width:100%;height:100%;object-fit:contain!important;object-position:center;padding:8px}
   #product-dialog .dialog-text{max-height:calc(100vh - 110px);max-height:calc(100dvh - 110px);min-width:0;overflow-y:auto;padding-right:8px}
 }
+
+
+/* Keep whole product photos visible on phones and in every detail gallery. */
+.dialog-art.has-photo,
+.dialog-art.has-photo .product-gallery,
+.dialog-art.has-photo .product-gallery .gallery-slide {
+  background: #f0e9dd;
+}
+.dialog-art.has-photo > .product-photo,
+.dialog-art.has-photo .product-gallery .product-photo {
+  object-fit: contain !important;
+  object-position: center;
+}
+@media (max-width: 760px) {
+  .product-image.has-photo > .product-photo,
+  .product-image.has-photo .product-gallery .product-photo {
+    object-fit: contain !important;
+    object-position: center;
+    padding: 8px;
+  }
+  .product-image.has-photo .product-gallery .gallery-slide {
+    background: #f0e9dd;
+  }
+}
+
+/* Let desktop product details scroll beside a fully fitted image. */
+@media (min-width: 761px) {
+  #product-dialog {
+    overflow: hidden;
+  }
+  #product-dialog #dialog-content {
+    min-height: 0;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+    align-items: stretch;
+  }
+  #product-dialog .dialog-art.has-photo {
+    height: min(66vh, 560px);
+    max-height: calc(100dvh - 96px);
+    min-height: 240px;
+  }
+  #product-dialog .dialog-text {
+    min-height: 0;
+    max-height: calc(100dvh - 112px);
+    overflow-y: auto;
+  }
+}
