@@ -34,7 +34,7 @@ const products = [
   },
   {
     id: 'chandni-1', name: 'Chandni Adjustable Bracelet', category: 'Bracelet Chains',
-    originalPrice: 799, salePrice: 499, image: 'assets/products/chandni-detail.jpg',
+    originalPrice: 799, salePrice: 499, image: 'assets/products/chandni-wrist.png', images: ['assets/products/chandni-wrist.png', 'assets/products/chandni-detail.jpg'],
     note: 'Chandni is moonlight. Snowflake and flower motifs glitter along a slim golden chain, like frost lit by the moon. Gold-tone adjustable slider bracelet with sparkling stones.'
   },
   {
@@ -81,6 +81,11 @@ const products = [
     id: 'shagun-1', name: 'Shagun Necklace Set', category: 'Necklaces',
     originalPrice: 2499, salePrice: 1799, image: 'assets/products/shagun.jpg',
     note: 'A statement necklace set with a flower of ruby-pink stones at its heart and a graceful teardrop pendant, wrapped in rows of dazzling white stones on a warm gold finish. Matching drop earrings complete the look. Made for weddings, sangeet nights and every occasion that deserves a little shagun.'
+  },
+  {
+    id: 'harini-1', name: 'Harini Necklace Set', category: 'Necklaces',
+    originalPrice: 2699, salePrice: 1899, image: 'assets/products/harini.jpg',
+    note: 'Cool mint, soft silver glow. A graceful silver-finish necklace set with fresh mint-green pear-cut stones and sparkling white stones. A round medallion pendant with delicate drops sits at the center, and long matching earrings complete the look. Lovely with pastel and ivory outfits for weddings, festivals and special evenings.'
   },
   {
     id: 'kiran-1', name: 'Kiran Bangles', category: 'Bangles',
