@@ -34,7 +34,7 @@ const products = [
   },
   {
     id: 'chandni-1', name: 'Chandni Adjustable Bracelet', category: 'Bracelet Chains',
-    originalPrice: 799, salePrice: 499, image: 'assets/products/chandni-wrist.png', images: ['assets/products/chandni-wrist.png', 'assets/products/chandni-detail.jpg'],
+    originalPrice: 799, salePrice: 499, image: 'assets/products/chandni-bracelet-focus.png', images: ['assets/products/chandni-bracelet-focus.png', 'assets/products/chandni-detail.jpg'],
     note: 'Chandni is moonlight. Snowflake and flower motifs glitter along a slim golden chain, like frost lit by the moon. Gold-tone adjustable slider bracelet with sparkling stones.'
   },
   {
