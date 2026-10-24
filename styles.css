@@ -430,3 +430,41 @@ dialog{max-width:min(900px,calc(100% - 30px));max-height:92vh;overflow-y:auto}
 .cart-line{align-items:flex-start;min-width:0}
 .cart-line>div:nth-child(2){flex:1;min-width:0}
 .cart-line>strong{flex:0 0 auto;white-space:nowrap}
+
+
+/* Clear black hover feedback for navigation and collection controls. */
+.site-header nav{gap:clamp(2px,.55vw,9px)}
+.site-header nav a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px 10px;
+  border-radius:3px;
+  transition:background-color .18s ease,color .18s ease;
+}
+@media(hover:hover){
+  .site-header nav a:hover,
+  .header-actions .icon-button:hover,
+  .header-actions .menu-button:hover,
+  .text-button:hover,
+  .filters .filter:hover:not(.active){
+    background:#080808;
+    color:#fff;
+  }
+}
+.site-header nav a:focus-visible,
+.header-actions .icon-button:focus-visible,
+.header-actions .menu-button:focus-visible,
+.text-button:focus-visible,
+.filters .filter:focus-visible{
+  outline:2px solid #b28a42;
+  outline-offset:2px;
+}
+.header-actions .icon-button,
+.header-actions .menu-button,
+.text-button{
+  border-radius:3px;
+  transition:background-color .18s ease,color .18s ease;
+}
+.filters .filter{transition:background-color .18s ease,color .18s ease,border-color .18s ease}
+.filters .filter:hover:not(.active){border-color:#080808}
