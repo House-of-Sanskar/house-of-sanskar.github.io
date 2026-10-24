@@ -146,6 +146,25 @@ function productVisual(product, placement = 'product') {
   return `<div class="image-pending image-pending-${placement}"><span>S</span><small>Image coming soon</small></div>`;
 }
 
+const revealObserver = 'IntersectionObserver' in window
+  ? new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -24px 0px' })
+  : null;
+
+function prepareScrollReveals(elements) {
+  elements.forEach(element => {
+    if (element.classList.contains('reveal-on-scroll')) return;
+    element.classList.add('reveal-on-scroll');
+    if (revealObserver) revealObserver.observe(element);
+    else element.classList.add('is-visible');
+  });
+}
+
 function renderProducts() {
   const selectedView = collectionViews[currentFilter];
   const selectedCategories = selectedView?.categories; const shown = selectedCategories === null ? products : products.filter(product => (selectedCategories ?? [currentFilter]).includes(product.category));
@@ -159,6 +178,7 @@ function renderProducts() {
         <div class="product-price">${priceMarkup(product)}</div>
       </div>
     </article>`).join('');
+  prepareScrollReveals(grid.querySelectorAll('.product'));
 }
 
 function updateCart() {
@@ -212,6 +232,7 @@ function selectCollection(collection) {
   renderProducts();
 }
 
+prepareScrollReveals(document.querySelectorAll('.collection-note, .whatsapp-cta, .story'));
 renderProducts();
 updateCart();
 document.querySelector('#year').textContent = new Date().getFullYear();

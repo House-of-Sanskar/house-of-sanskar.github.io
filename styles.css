@@ -102,3 +102,8 @@ dialog{max-width:min(900px,calc(100% - 30px));max-height:92vh;overflow-y:auto}
 .dialog-art .product-gallery .gallery-slide{background:#f0e9dd}
 @media(max-width:760px){.product-gallery .product-photo{padding:5px}.gallery-dots{bottom:8px}.dialog-art .product-gallery .product-photo{padding:8px}}
 
+
+/* Soft reveal as catalogue sections enter view */
+.reveal-on-scroll{opacity:0;transform:translateY(14px);transition:opacity .65s ease,transform .65s cubic-bezier(.2,.65,.3,1)}
+.reveal-on-scroll.is-visible{opacity:1;transform:translateY(0)}
+@media(prefers-reduced-motion:reduce){.reveal-on-scroll,.reveal-on-scroll.is-visible{opacity:1;transform:none;transition:none}}
