@@ -104,12 +104,12 @@ const products = [
   },
   {
     id: 'ishq-1', name: 'Ishq Heart Ring', category: 'Rings',
-    salePrice: 79, image: 'assets/products/ishq.jpg', images: ['assets/products/ishq.jpg', 'assets/products/ishq-box.jpg'],
+    salePrice: 199, image: 'assets/products/ishq.jpg', images: ['assets/products/ishq.jpg', 'assets/products/ishq-box.jpg'],
     note: 'A dainty gold-finish ring with a heart-cut stone set in a smooth gold frame, with tiny sparkling stones along the band. Sweet, simple and made for gifting to someone you love, or to yourself. Comes in a bow-tied gift box.'
   },
   {
     id: 'jodi-1', name: 'Jodi Double-Band Ring', category: 'Rings',
-    salePrice: 79, image: 'assets/products/jodi.jpg', images: ['assets/products/jodi.jpg', 'assets/products/jodi-box.jpg'],
+    salePrice: 149, image: 'assets/products/jodi.jpg', images: ['assets/products/jodi.jpg', 'assets/products/jodi-box.jpg'],
     note: 'A double-band gold-finish ring with a delicate center stone and two rows of fine sparkling stones. It looks like a stacked pair but sits as one, bringing a refined, everyday shine to any hand. Comes in a bow-tied gift box.'
   }
 ];
