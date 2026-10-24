@@ -113,3 +113,8 @@ dialog{max-width:min(900px,calc(100% - 30px));max-height:92vh;overflow-y:auto}
   .product-image.has-photo .product-photo{transition:transform .55s cubic-bezier(.2,.65,.3,1)}
   .product-image.has-photo:hover .product-photo{transform:scale(1.035)}
 }
+
+/* Full-bleed, undistorted product card photography */
+.product-image.has-photo{padding:0;border:0;overflow:hidden;background:#f0e9dd}
+.product-image.has-photo>.product-photo,.product-image.has-photo .product-gallery .product-photo{object-fit:cover;padding:0}
+.product-image.has-photo .product-gallery .gallery-slide{background:#f0e9dd}
