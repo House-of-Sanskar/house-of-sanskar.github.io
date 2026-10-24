@@ -292,3 +292,83 @@ dialog{max-width:min(900px,calc(100% - 30px));max-height:92vh;overflow-y:auto}
  .gift-threshold{padding:11px 12px;font-size:11px}
  .gift-threshold strong{font-size:11px}
 }
+
+
+/* Mobile product detail: always fit the complete original photo inside the image frame. */
+@media(max-width:760px){
+  #product-dialog{
+    width:calc(100vw - 24px)!important;
+    max-width:calc(100vw - 24px)!important;
+    max-height:calc(100dvh - 24px)!important;
+    overflow-y:auto!important;
+  }
+  #product-dialog #dialog-content{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    grid-template-rows:auto auto!important;
+    grid-template-areas:'image' 'details'!important;
+    align-items:start!important;
+    gap:15px!important;
+    padding:40px 16px 20px!important;
+    min-width:0!important;
+  }
+  #product-dialog #dialog-content>.dialog-art.has-photo{
+    grid-area:image!important;
+    position:relative!important;
+    display:block!important;
+    width:100%!important;
+    height:min(43dvh,360px)!important;
+    min-height:190px!important;
+    max-height:360px!important;
+    margin:0!important;
+    overflow:hidden!important;
+    background:#f0e9dd!important;
+  }
+  #product-dialog .dialog-art.has-photo>img.product-photo{
+    display:block!important;
+    width:100%!important;
+    height:100%!important;
+    max-width:100%!important;
+    max-height:100%!important;
+    padding:8px!important;
+    object-fit:contain!important;
+    object-position:center center!important;
+  }
+  #product-dialog .dialog-art.has-photo>.product-gallery{
+    position:absolute!important;
+    inset:0!important;
+    display:flex!important;
+    width:100%!important;
+    height:100%!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+  }
+  #product-dialog .dialog-art.has-photo .product-gallery>.gallery-slide{
+    flex:0 0 100%!important;
+    width:100%!important;
+    height:100%!important;
+    min-width:0!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    overflow:hidden!important;
+    background:#f0e9dd!important;
+  }
+  #product-dialog .dialog-art.has-photo .gallery-slide>img.product-photo{
+    display:block!important;
+    width:100%!important;
+    height:100%!important;
+    max-width:100%!important;
+    max-height:100%!important;
+    padding:8px!important;
+    object-fit:contain!important;
+    object-position:center center!important;
+  }
+  #product-dialog #dialog-content>.dialog-text{
+    grid-area:details!important;
+    position:relative!important;
+    min-width:0!important;
+    max-height:none!important;
+    overflow:visible!important;
+  }
+}
