@@ -3,9 +3,9 @@ const BUSINESS_WHATSAPP = '917439075469';
 
 const products = [
   {
-    id: 'heartline-set', name: 'Heart Pendant Set', category: 'Pendant Sets',
-    salePrice: 199, image: 'assets/products/heartline.jpg',
-    note: 'A delicate silver-tone heart pendant with a fine chain and matching heart-shaped studs. A sweet, easy-to-wear set for everyday sparkle and thoughtful gifting.'
+    id: 'heartline-set', name: 'Dil Pendant Set', category: 'Pendant Sets',
+    salePrice: 199, image: 'assets/products/dil-model.jpg',
+    note: 'A delicate silver-tone heart pendant with a silver-tone chain and matching heart-shaped studs. A sweet, easy-to-wear set for everyday sparkle and thoughtful gifting.'
   },
   {
     id: 'riwaayat-1', name: 'Riwaayat Royal Set', category: 'Riwaayat Collection',
@@ -79,7 +79,7 @@ const products = [
   },
   {
     id: 'heer-1', name: 'Heer Double-Heart Pendant Set', category: 'Pendant Sets',
-    originalPrice: 799, salePrice: 559, image: 'assets/products/heer-new.jpg', images: ['assets/products/heer-new.jpg', 'assets/products/heer-detail.jpg'],
+    originalPrice: 799, salePrice: 559, image: 'assets/products/heer-ruby-model.jpg', images: ['assets/products/heer-ruby-model.jpg', 'assets/products/heer-new.jpg', 'assets/products/heer-detail.jpg'],
     note: 'Heer is a love story in gold. Ruby-pink sparkle sits within a graceful double-heart design, finished with a fine golden chain and matching earrings. A sweet statement for celebrations or everyday romance.'
   },
   {
