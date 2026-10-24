@@ -76,6 +76,36 @@ const products = [
     id: 'heer-1', name: 'Heer Double-Heart Pendant Set', category: 'Pendant Sets',
     originalPrice: 799, salePrice: 499, image: 'assets/products/heer.jpg',
     note: 'Heer is a love story in gold. Two hearts hold one green stone close, a gift that says what words cannot. Gold-tone double-heart design with a green centre stone and matching earrings.'
+  },
+  {
+    id: 'shagun-1', name: 'Shagun Necklace Set', category: 'Necklaces',
+    originalPrice: 2499, salePrice: 1799, image: 'assets/products/shagun.jpg',
+    note: 'A statement necklace set with a flower of ruby-pink stones at its heart and a graceful teardrop pendant, wrapped in rows of dazzling white stones on a warm gold finish. Matching drop earrings complete the look. Made for weddings, sangeet nights and every occasion that deserves a little shagun.'
+  },
+  {
+    id: 'kiran-1', name: 'Kiran Bangles', category: 'Bangles',
+    originalPrice: 899, salePrice: 599, image: 'assets/products/kiran.jpg', images: ['assets/products/kiran.jpg', 'assets/products/kiran-box.jpg'],
+    note: 'A pair of gold-finish bangles lined with clear marquise-cut stones, set one after another like tiny rays of light. Slim, shiny and elegant enough for daily wear, yet bright enough to carry a festive outfit. Comes in a gift-ready box.'
+  },
+  {
+    id: 'anaar-1', name: 'Anaar Bangles', category: 'Bangles',
+    originalPrice: 799, salePrice: 499, image: 'assets/products/anaar.jpg', images: ['assets/products/anaar.jpg', 'assets/products/anaar-box.jpg'],
+    note: 'A pair of gold-finish bangles set all around with deep ruby-pink stones, glowing like pomegranate seeds. A classic that never goes out of style, lovely with silk sarees, lehengas and everything festive. Comes in a gift-ready box.'
+  },
+  {
+    id: 'taara-1', name: 'Taara Bangles', category: 'Bangles',
+    originalPrice: 799, salePrice: 499, image: 'assets/products/taara.jpg',
+    note: 'A pair of gold-finish bangles studded with round, clear stones that twinkle like a sky full of stars. Light to wear, easy to match and perfect for gifting. Comes in a gift-ready box.'
+  },
+  {
+    id: 'ishq-1', name: 'Ishq Heart Ring', category: 'Rings',
+    salePrice: 79, image: 'assets/products/ishq.jpg', images: ['assets/products/ishq.jpg', 'assets/products/ishq-box.jpg'],
+    note: 'A dainty gold-finish ring with a heart-cut stone set in a smooth gold frame, with tiny sparkling stones along the band. Sweet, simple and made for gifting to someone you love, or to yourself. Comes in a bow-tied gift box.'
+  },
+  {
+    id: 'jodi-1', name: 'Jodi Double-Band Ring', category: 'Rings',
+    salePrice: 79, image: 'assets/products/jodi.jpg', images: ['assets/products/jodi.jpg', 'assets/products/jodi-box.jpg'],
+    note: 'A double-band gold-finish ring with a delicate center stone and two rows of fine sparkling stones. It looks like a stacked pair but sits as one, bringing a refined, everyday shine to any hand. Comes in a bow-tied gift box.'
   }
 ];
 let cart = [];
@@ -83,10 +113,16 @@ let currentFilter = 'All';
 const collectionViews = {
   All: { categories: null, title: 'All<br />pieces.', kicker: 'Sanskar collection' },
   Necklaces: { categories: ['Necklaces'], title: 'Necklace<br />sets.', kicker: 'Sanskar collection' },
-  'Elite Bracelets': { categories: ['Elite Bracelets'], title: 'Elite bracelet<br />pieces.', kicker: 'Bracelet edit' },  'Bracelet Chains': { categories: ['Bracelet Chains'], title: 'Bracelet<br />chains.', kicker: 'Bracelet edit' },  Bracelets: { categories: ['Elite Bracelets', 'Bracelet Chains'], title: 'Bracelet<br />edits.', kicker: 'Sanskar collection' },
+  Bangles: { categories: ['Bangles'], title: 'Bangles for<br />every day.', kicker: 'New collection' },
+  Rings: { categories: ['Rings'], title: 'Rings with<br />a little sparkle.', kicker: 'New collection' },
+  'Elite Bracelets': { categories: ['Elite Bracelets'], title: 'Elite bracelet<br />pieces.', kicker: 'Bracelet edit' },
+  'Bracelet Chains': { categories: ['Bracelet Chains'], title: 'Bracelet<br />chains.', kicker: 'Bracelet edit' },
+  Bracelets: { categories: ['Elite Bracelets', 'Bracelet Chains'], title: 'Bracelet<br />edits.', kicker: 'Sanskar collection' },
   'Pendant Sets': { categories: ['Pendant Sets'], title: 'Pendant<br />sets.', kicker: 'Sanskar collection' },
   Riwaayat: { categories: ['Riwaayat Collection'], title: 'Riwaayat<br />collection.', kicker: 'The royal edit' },
-  'Royal Earrings': { categories: ['Royal Earrings'], title: 'Royal<br />earrings.', kicker: 'Earring edit' },  'Earring Sets': { categories: ['Earring Sets'], title: 'Earring<br />sets.', kicker: 'Earring edit' },  Earrings: { categories: ['Royal Earrings', 'Earring Sets'], title: 'Earring<br />edits.', kicker: 'Sanskar collection' }
+  'Royal Earrings': { categories: ['Royal Earrings'], title: 'Royal<br />earrings.', kicker: 'Earring edit' },
+  'Earring Sets': { categories: ['Earring Sets'], title: 'Earring<br />sets.', kicker: 'Earring edit' },
+  Earrings: { categories: ['Royal Earrings', 'Earring Sets'], title: 'Earring<br />edits.', kicker: 'Sanskar collection' }
 };
 const fmt = value => `₹${Number(value).toLocaleString('en-IN')}`;
 const grid = document.querySelector('#product-grid');
@@ -104,7 +140,9 @@ function priceMarkup(product) {
 }
 
 function productVisual(product, placement = 'product') {
-  if (product.image) return `<img class="product-photo" src="${product.image}" alt="${product.name}" />`;
+  const images = product.images?.length ? product.images : (product.image ? [product.image] : []);
+  if (images.length > 1) return `<div class="product-gallery" data-gallery role="group" aria-label="${product.name} photos">${images.map((src, index) => `<div class="gallery-slide"><img class="product-photo" src="${src}" alt="${product.name} - photo ${index + 1} of ${images.length}" /></div>`).join('')}</div><div class="gallery-dots" aria-hidden="true">${images.map((_, index) => `<span class="gallery-dot${index === 0 ? ' active' : ''}"></span>`).join('')}</div>`;
+  if (images.length) return `<img class="product-photo" src="${images[0]}" alt="${product.name}" />`;
   return `<div class="image-pending image-pending-${placement}"><span>S</span><small>Image coming soon</small></div>`;
 }
 
@@ -184,6 +222,12 @@ overlay.addEventListener('click', closeCart);
 document.querySelector('#filter-button').addEventListener('click', () => { const filters = document.querySelector('#filters'); filters.hidden = !filters.hidden; });
 document.querySelector('#filters').addEventListener('click', event => { if (!event.target.matches('.filter')) return; selectCollection(event.target.dataset.filter); });
 document.querySelectorAll('.collection-link').forEach(link => link.addEventListener('click', event => { event.preventDefault(); selectCollection(link.dataset.collection); document.querySelector('#shop').scrollIntoView({ behavior: 'smooth', block: 'start' }); }));
+document.addEventListener('scroll', event => {
+  const gallery = event.target.closest?.('[data-gallery]');
+  if (!gallery) return;
+  const active = Math.round(gallery.scrollLeft / gallery.clientWidth);
+  gallery.nextElementSibling?.querySelectorAll('.gallery-dot').forEach((dot, index) => dot.classList.toggle('active', index === active));
+}, true);
 grid.addEventListener('click', event => { const image = event.target.closest('.product-image[data-quick]'); if (image) openQuickView(image.dataset.quick); });
 grid.addEventListener('keydown', event => { const image = event.target.closest('.product-image[data-quick]'); if (!image || (event.key !== 'Enter' && event.key !== ' ')) return; event.preventDefault(); openQuickView(image.dataset.quick); });
 document.querySelector('#product-dialog').addEventListener('click', event => { if (event.target.matches('.dialog-close')) event.currentTarget.close(); const add = event.target.closest('[data-add]'); if (add) { addToCart(add.dataset.add); event.currentTarget.close(); } });
@@ -199,3 +243,4 @@ document.querySelector('[data-search-close]').addEventListener('click', closeSea
 document.querySelector('#product-search').addEventListener('input', event => renderSearch(event.target.value));
 document.querySelector('#search-results').addEventListener('click', event => { const item = event.target.closest('[data-search-product]'); if (item) { closeSearch(); openQuickView(item.dataset.searchProduct); } });
 const menuButton = document.querySelector('#menu-button'); const siteNav = document.querySelector('.site-header nav'); menuButton.setAttribute('aria-expanded','false'); menuButton.addEventListener('click',()=>{const open=menuButton.getAttribute('aria-expanded')!=='true';menuButton.setAttribute('aria-expanded',String(open));menuButton.setAttribute('aria-label',open?'Close menu':'Open menu');siteNav.classList.toggle('mobile-open',open);}); siteNav.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{menuButton.setAttribute('aria-expanded','false');siteNav.classList.remove('mobile-open');}));
+
