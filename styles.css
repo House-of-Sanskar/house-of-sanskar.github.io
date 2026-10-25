@@ -526,3 +526,19 @@ dialog{max-width:min(900px,calc(100% - 30px));max-height:92vh;overflow-y:auto}
 @media(prefers-reduced-motion:reduce){
  .hero-slide,.hero-product-frame,.hero-cta,.hero-arrow,.hero-dot{transition:none!important}
 }
+
+/* Dil's model photo fills its beveled feature frame edge-to-edge. */
+.hero-product-frame{aspect-ratio:4/5;width:min(100%,400px);max-height:520px;padding:0;overflow:hidden}
+.hero-product-frame img{object-fit:cover}
+.hero-product-frame:before{inset:7px;z-index:2}
+.hero-product-frame:after{z-index:1}
+@media(max-width:760px){.hero-product-frame{max-height:440px}}
+/* Heer colour choices: green mannequin image first, red model image second. */
+.heer-tone-picker{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin:9px 0 12px;font:600 10px 'Montserrat',sans-serif;color:#66594b}
+.heer-tone-picker>span{width:100%;margin-bottom:1px;text-transform:uppercase;letter-spacing:.1em;font-size:9px;color:#8b744e}
+.heer-tone{border:1px solid transparent;border-radius:20px;padding:6px 11px;color:#fff;font:700 10px 'Montserrat',sans-serif;cursor:pointer;opacity:.76;transition:opacity .2s,box-shadow .2s,transform .2s}
+.heer-tone:hover{opacity:1;transform:translateY(-1px)}
+.heer-tone.selected{opacity:1;box-shadow:0 0 0 2px #fffefa,0 0 0 3px #b28a42}
+.green-tone{background:#356b45}.red-tone{background:#9e3440}
+.product-info .heer-tone-picker{grid-column:1/-1;margin:8px 0 0}
+.product-info>div:first-child{max-width:100%}

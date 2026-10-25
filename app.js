@@ -3,11 +3,6 @@ const BUSINESS_WHATSAPP = '917439075469';
 
 const products = [
   {
-    id: 'heartline-set', name: 'Dil Pendant Set', category: 'Pendant Sets',
-    salePrice: 199, image: 'assets/products/dil-model.jpg',
-    note: 'A delicate silver-tone heart pendant with a silver-tone chain and matching heart-shaped studs. A sweet, easy-to-wear set for everyday sparkle and thoughtful gifting.'
-  },
-  {
     id: 'riwaayat-1', name: 'Riwaayat Royal Set', category: 'Riwaayat Collection',
     originalPrice: 2999, salePrice: 2499, image: 'assets/products/riwaayat-new.png', royal: true,
     note: 'Riwaayat means tradition. Ruby-pink blossoms flow into a river of emerald green, creating a statement set for the day the whole family gathers around you. Gold-tone finish, ruby-pink and emerald stones, with matching earrings.'
@@ -79,8 +74,13 @@ const products = [
   },
   {
     id: 'heer-1', name: 'Heer Double-Heart Pendant Set', category: 'Pendant Sets',
-    originalPrice: 799, salePrice: 559, image: 'assets/products/heer-ruby-model.jpg', images: ['assets/products/heer-ruby-model.jpg', 'assets/products/heer-new.jpg', 'assets/products/heer-detail.jpg'],
-    note: 'Heer is a love story in gold. Ruby-pink sparkle sits within a graceful double-heart design, finished with a fine golden chain and matching earrings. A sweet statement for celebrations or everyday romance.'
+    originalPrice: 799, salePrice: 559, image: 'assets/products/heer-detail.jpg', images: ['assets/products/heer-detail.jpg', 'assets/products/heer-ruby-model.jpg'],
+    note: 'Heer is a love story in gold. Choose a vivid green centre stone or a ruby-pink centre stone, both framed by warm gold-tone double hearts with matching earrings.'
+  },
+  {
+    id: 'heartline-set', name: 'Dil Silver-Plated Pendant Set', category: 'Pendant Sets',
+    salePrice: 199, image: 'assets/products/dil-model.jpg',
+    note: 'A delicate silver-tone heart pendant with a silver-plated chain and matching heart-shaped studs. A sweet, easy-to-wear set for everyday sparkle and thoughtful gifting.'
   },
   {
     id: 'shagun-1', name: 'Shagun Necklace Set', category: 'Necklaces',
@@ -175,6 +175,14 @@ function prepareScrollReveals(elements) {
   });
 }
 
+function heerTonePicker() {
+  return `<div class="heer-tone-picker" aria-label="Choose Heer stone colour">
+    <span>Choose colour</span>
+    <button type="button" class="heer-tone green-tone selected" data-heer-tone="0" aria-pressed="true">Green</button>
+    <button type="button" class="heer-tone red-tone" data-heer-tone="1" aria-pressed="false">Red</button>
+  </div>`;
+}
+
 function renderProducts() {
   const selectedView = collectionViews[currentFilter];
   const selectedCategories = selectedView?.categories; const shown = selectedCategories === null ? products : products.filter(product => (selectedCategories ?? [currentFilter]).includes(product.category));
@@ -184,7 +192,7 @@ function renderProducts() {
         ${productVisual(product)}
       </div>
       <div class="product-info">
-        <div><h3>${product.name}</h3><p>${product.category}</p>${product.royal ? '<p class="royal-note">Limited royal collection</p>' : ''}${product.variants ? '<p class="variant-preview">Single · Set of 2 · Set of 3</p>' : ''}</div>
+        <div><h3>${product.name}</h3><p>${product.category}</p>${product.royal ? '<p class="royal-note">Limited royal collection</p>' : ''}${product.variants ? '<p class="variant-preview">Single · Set of 2 · Set of 3</p>' : ''}${product.id === 'heer-1' ? heerTonePicker() : ''}</div>
         <div class="product-price">${priceMarkup(product)}</div>
       </div>
     </article>`).join('');
@@ -220,7 +228,7 @@ function openQuickView(id) {
   const variants = product.variants ? `<div class="variant-list"><p>Choose your set</p>${product.variants.map(variant => `<div><span>${variant.label}</span><em>${variant.salePrice == null ? 'Price coming soon' : fmt(variant.salePrice)}</em></div>`).join('')}</div>` : '';
   const message = encodeURIComponent(`Hello Sanskar, I’m interested in ${product.name}. Please share the final price and availability.`);
   const action = `<div class="product-actions"><button class="button product-add" data-add="${product.id}">Add to bag <span>→</span></button><a class="product-whatsapp" href="https://wa.me/${BUSINESS_WHATSAPP}?text=${message}" target="_blank" rel="noreferrer">Order on WhatsApp ${whatsappIcon}</a></div>`;
-  document.querySelector('#dialog-content').innerHTML = `<div class="dialog-art ${product.image ? 'has-photo' : 'image-placeholder'}">${productVisual(product, 'dialog')}</div><div class="dialog-text"><p class="eyebrow">${product.category}</p><h2>${product.name}</h2><div class="dialog-price">${priceMarkup(product)}</div><p>${product.note}</p>${variants}${action}</div>`;
+  document.querySelector('#dialog-content').innerHTML = `<div class="dialog-art ${product.image ? 'has-photo' : 'image-placeholder'}">${productVisual(product, 'dialog')}</div><div class="dialog-text"><p class="eyebrow">${product.category}</p><h2>${product.name}</h2><div class="dialog-price">${priceMarkup(product)}</div>${product.id === 'heer-1' ? heerTonePicker() : ''}<p>${product.note}</p>${variants}${action}</div>`;
   document.querySelector('#product-dialog').showModal();
 }
 
@@ -257,10 +265,12 @@ document.addEventListener('scroll', event => {
   if (!gallery) return;
   const active = Math.round(gallery.scrollLeft / gallery.clientWidth);
   gallery.nextElementSibling?.querySelectorAll('.gallery-dot').forEach((dot, index) => dot.classList.toggle('active', index === active));
+  const scope = gallery.closest('.product') || document.querySelector('#dialog-content');
+  scope?.querySelectorAll('[data-heer-tone]').forEach((button, index) => { button.classList.toggle('selected', index === active); button.setAttribute('aria-pressed', String(index === active)); });
 }, true);
-grid.addEventListener('click', event => { const image = event.target.closest('.product-image[data-quick]'); if (image) openQuickView(image.dataset.quick); });
+grid.addEventListener('click', event => { const tone = event.target.closest('[data-heer-tone]'); if (tone) { event.stopPropagation(); const gallery = tone.closest('.product')?.querySelector('[data-gallery]'); gallery?.scrollTo({ left: Number(tone.dataset.heerTone) * gallery.clientWidth, behavior: 'smooth' }); return; } const image = event.target.closest('.product-image[data-quick]'); if (image) openQuickView(image.dataset.quick); });
 grid.addEventListener('keydown', event => { const image = event.target.closest('.product-image[data-quick]'); if (!image || (event.key !== 'Enter' && event.key !== ' ')) return; event.preventDefault(); openQuickView(image.dataset.quick); });
-document.querySelector('#product-dialog').addEventListener('click', event => { if (event.target.matches('.dialog-close')) event.currentTarget.close(); const add = event.target.closest('[data-add]'); if (add) { addToCart(add.dataset.add); event.currentTarget.close(); } });
+document.querySelector('#product-dialog').addEventListener('click', event => { const tone = event.target.closest('[data-heer-tone]'); if (tone) { const gallery = document.querySelector('#dialog-content [data-gallery]'); gallery?.scrollTo({ left: Number(tone.dataset.heerTone) * gallery.clientWidth, behavior: 'smooth' }); return; } if (event.target.matches('.dialog-close')) event.currentTarget.close(); const add = event.target.closest('[data-add]'); if (add) { addToCart(add.dataset.add); event.currentTarget.close(); } });
 document.querySelector('#cart-items').addEventListener('click', event => { const button = event.target.closest('[data-remove]'); if (button) { cart = cart.filter(item => item.id !== button.dataset.remove); updateCart(); } });
 document.querySelector('#checkout-button').addEventListener('click', () => {
   if (!cart.length) return showToast('Add a piece to your bag first.');
