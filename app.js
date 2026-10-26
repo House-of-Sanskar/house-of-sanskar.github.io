@@ -1,5 +1,5 @@
 // Sanskar catalogue setup. Replace each image, salePrice and originalPrice when they are ready.
-const BUSINESS_WHATSAPP = '917439075469';
+const BUSINESS_WHATSAPP = '917439320460';
 
 const products = [
   {
