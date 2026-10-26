@@ -274,8 +274,8 @@ document.querySelector('#product-dialog').addEventListener('click', event => { c
 document.querySelector('#cart-items').addEventListener('click', event => { const button = event.target.closest('[data-remove]'); if (button) { cart = cart.filter(item => item.id !== button.dataset.remove); updateCart(); } });
 document.querySelector('#checkout-button').addEventListener('click', () => {
   if (!cart.length) return showToast('Add a piece to your bag first.');
-  const lines = cart.map(item => `• ${item.name} × ${item.quantity} — ${item.salePrice == null ? 'Price on request' : `${fmt(item.salePrice)} each`}`).join('\\n');
-  const message = `Hello Sanskar, I’m interested in ordering these pieces:\\n${lines}\\n\\nPlease let me know the next steps.`;
+  const lines = cart.map(item => `• ${item.name} × ${item.quantity} — ${item.salePrice == null ? 'Price on request' : `${fmt(item.salePrice)} each`}`).join('\n');
+  const message = `Hello Sanskar, I’m interested in ordering these pieces:\n${lines}\n\nPlease let me know the next steps.`;
   window.open(`https://wa.me/${BUSINESS_WHATSAPP}?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
 });
 document.querySelector('#search-button').addEventListener('click', () => { const panel = document.querySelector('#search-panel'); panel.classList.add('open'); panel.setAttribute('aria-hidden', 'false'); renderSearch(); setTimeout(() => document.querySelector('#product-search').focus(), 100); });
