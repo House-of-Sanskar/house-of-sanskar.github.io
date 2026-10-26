@@ -226,7 +226,7 @@ function addToCart(id) {
 function openQuickView(id) {
   const product = products.find(item => item.id === id);
   const variants = product.variants ? `<div class="variant-list"><p>Choose your set</p>${product.variants.map(variant => `<div><span>${variant.label}</span><em>${variant.salePrice == null ? 'Price coming soon' : fmt(variant.salePrice)}</em></div>`).join('')}</div>` : '';
-  const message = encodeURIComponent(`Hello Sanskar, I’m interested in ${product.name}. Please share the final price and availability.`);
+  const message = encodeURIComponent(`Hello Sanskar, I’m interested in buying ${product.name}.`);
   const action = `<div class="product-actions"><button class="button product-add" data-add="${product.id}">Add to bag <span>→</span></button><a class="product-whatsapp" href="https://wa.me/${BUSINESS_WHATSAPP}?text=${message}" target="_blank" rel="noreferrer">Order on WhatsApp ${whatsappIcon}</a></div>`;
   document.querySelector('#dialog-content').innerHTML = `<div class="dialog-art ${product.image ? 'has-photo' : 'image-placeholder'}">${productVisual(product, 'dialog')}</div><div class="dialog-text"><p class="eyebrow">${product.category}</p><h2>${product.name}</h2><div class="dialog-price">${priceMarkup(product)}</div>${product.id === 'heer-1' ? heerTonePicker() : ''}<p>${product.note}</p>${variants}${action}</div>`;
   document.querySelector('#product-dialog').showModal();
@@ -274,9 +274,9 @@ document.querySelector('#product-dialog').addEventListener('click', event => { c
 document.querySelector('#cart-items').addEventListener('click', event => { const button = event.target.closest('[data-remove]'); if (button) { cart = cart.filter(item => item.id !== button.dataset.remove); updateCart(); } });
 document.querySelector('#checkout-button').addEventListener('click', () => {
   if (!cart.length) return showToast('Add a piece to your bag first.');
-  const lines = cart.map(item => `• ${item.name} × ${item.quantity} — ${item.salePrice == null ? 'Price to be confirmed' : fmt(item.salePrice * item.quantity)}`).join('\n');
-  const total = cart.every(item => item.salePrice != null) ? `\n\nTotal: ${fmt(cart.reduce((sum, item) => sum + item.salePrice * item.quantity, 0))}` : '\n\nPlease confirm the final total.';
-  window.open(`https://wa.me/${BUSINESS_WHATSAPP}?text=${encodeURIComponent(`Hello Sanskar, I’d like to order:\n${lines}${total}`)}`, '_blank', 'noopener');
+  const lines = cart.map(item => `• ${item.name} × ${item.quantity} — ${item.salePrice == null ? 'Price on request' : `${fmt(item.salePrice)} each`}`).join('\\n');
+  const message = `Hello Sanskar, I’m interested in ordering these pieces:\\n${lines}\\n\\nPlease let me know the next steps.`;
+  window.open(`https://wa.me/${BUSINESS_WHATSAPP}?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
 });
 document.querySelector('#search-button').addEventListener('click', () => { const panel = document.querySelector('#search-panel'); panel.classList.add('open'); panel.setAttribute('aria-hidden', 'false'); renderSearch(); setTimeout(() => document.querySelector('#product-search').focus(), 100); });
 document.querySelector('[data-search-close]').addEventListener('click', closeSearch);
