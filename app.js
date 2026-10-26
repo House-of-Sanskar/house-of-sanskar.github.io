@@ -80,6 +80,7 @@ const products = [
   {
     id: 'heartline-set', name: 'Dil Silver-Plated Pendant Set', category: 'Pendant Sets',
     salePrice: 199, image: 'assets/products/dil-model.jpg',
+    images: ['assets/products/dil-model.jpg', 'assets/products/dil-hero.jpg'],
     note: 'A delicate silver-tone heart pendant with a silver-plated chain and matching heart-shaped studs. A sweet, easy-to-wear set for everyday sparkle and thoughtful gifting.'
   },
   {
