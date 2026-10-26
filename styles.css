@@ -500,7 +500,7 @@ dialog{max-width:min(900px,calc(100% - 30px));max-height:92vh;overflow-y:auto}
 .hero-dot{width:8px;height:8px;padding:0;border:1px solid #e6cc98;border-radius:50%;background:transparent;cursor:pointer;transition:width .25s,background .25s}
 .hero-dot.is-active{width:24px;border-radius:8px;background:#d8b66e}
 @media(max-width:760px){
- .hero-carousel{height:clamp(650px,calc(100svh - 122px),790px);min-height:650px!important}
+ .hero-carousel{height:clamp(650px,calc(100svh - 220px),700px);min-height:650px!important}
  .hero-slide{grid-template-columns:minmax(0,.95fr) minmax(0,1fr);gap:12px;padding:28px 19px 68px}
  .hero-slide-cover{display:flex;align-items:center;background-image:linear-gradient(90deg,rgba(15,11,7,.73),rgba(15,11,7,.4)),url('assets/sanskar-official-logo.png');background-position:center}
  .hero-slide-cover .hero-copy{padding:0;min-height:0}
@@ -666,7 +666,7 @@ dialog{max-width:min(900px,calc(100% - 30px));max-height:92vh;overflow-y:auto}
    background-image:
      linear-gradient(180deg,rgba(246,242,233,0) 0%,rgba(246,242,233,.05) 23%,#f6f2e9 42%,#f6f2e9 100%),
      url('assets/products/dil-hero.jpg');
-   background-size:100% 100%,125% auto;
+   background-size:100% 100%,210% auto;
    background-position:center,right top;
    background-repeat:no-repeat;
    background-color:#f6f2e9
