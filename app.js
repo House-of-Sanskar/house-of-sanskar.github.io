@@ -339,7 +339,7 @@ const menuButton = document.querySelector('#menu-button'); const siteNav = docum
   const stop = () => window.clearInterval(timer);
   const start = () => {
     stop();
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && document.visibilityState === 'visible') timer = window.setInterval(() => show(active + 1), 4200);
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && document.visibilityState === 'visible') timer = window.setInterval(() => show(active + 1), 3000);
   };
   dots.forEach(dot => dot.addEventListener('click', () => { show(Number(dot.dataset.heroDot)); start(); }));
   hero.querySelector('[data-hero-prev]').addEventListener('click', () => { show(active - 1); start(); });
