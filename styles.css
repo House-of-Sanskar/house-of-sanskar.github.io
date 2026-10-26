@@ -600,8 +600,8 @@ dialog{max-width:min(900px,calc(100% - 30px));max-height:92vh;overflow-y:auto}
      linear-gradient(180deg,rgba(15,11,7,.04) 0%,rgba(15,11,7,.1) 34%,rgba(17,12,7,.72) 61%,#17110b 100%),
      linear-gradient(90deg,rgba(17,12,7,.5),rgba(17,12,7,.08)),
      url('assets/products/dil-model.jpg');
-   background-size:100% 100%,100% 100%,cover;
-   background-position:center,center,62% center;
+   background-size:100% 100%,100% 100%,auto 84%;
+   background-position:center,center,center 8%;background-color:#17110b;
    background-repeat:no-repeat
  }
  .hero-slide-dil .hero-offer-copy{
