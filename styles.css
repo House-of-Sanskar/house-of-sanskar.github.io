@@ -619,3 +619,18 @@ dialog{max-width:min(900px,calc(100% - 30px));max-height:92vh;overflow-y:auto}
  .hero-slide-dil .hero-offer-copy{left:16px;right:16px;bottom:68px}
  .hero-slide-dil .hero-offer-copy h2{font-size:35px}
 }
+
+
+/* Slightly wider Dil image framing on desktop so the pendant reads clearly. */
+.hero-slide-dil .hero-product-frame{
+  width:min(100%,400px);
+  aspect-ratio:3/4;
+  max-height:520px;
+  overflow:hidden;
+  background:#17110b;
+}
+.hero-slide-dil .hero-product-frame img{
+  object-fit:contain;
+  object-position:center;
+  background:#17110b;
+}
