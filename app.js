@@ -108,6 +108,13 @@ const products = [
     note: 'A pair of gold-finish bangles studded with round, clear stones that twinkle like a sky full of stars. Light to wear, easy to match and perfect for gifting. Comes in a gift-ready box.'
   },
   {
+    id: 'ishq-pendant-set', name: 'Ishq Pendant Set', category: 'Pendant Sets',
+    originalPrice: 799, salePrice: 499, image: 'assets/products/ishq-blue.jpg',
+    images: ['assets/products/ishq-blue.jpg', 'assets/products/ishq-clear.jpg', 'assets/products/ishq-model.jpg'],
+    note: 'A graceful gold-tone pendant set with a sparkling teardrop design and matching earrings. Choose a rich royal-blue centre stone or a clear crystal look. The third photo shows the set worn by a model.',
+    ishqColours: ['Royal Blue', 'Crystal Clear']
+  },
+  {
     id: 'ishq-1', name: 'Ishq Heart Ring', category: 'Rings',
     salePrice: 199, image: 'assets/products/ishq.jpg', images: ['assets/products/ishq.jpg', 'assets/products/ishq-box.jpg'],
     note: 'A dainty gold-finish ring with a heart-cut stone set in a smooth gold frame, with tiny sparkling stones along the band. Sweet, simple and made for gifting to someone you love, or to yourself. Comes in a bow-tied gift box.'
@@ -183,6 +190,14 @@ function heerTonePicker() {
   </div>`;
 }
 
+function ishqTonePicker() {
+  return `<div class="ishq-tone-picker" aria-label="Choose Ishq stone colour">
+    <span>Choose colour</span>
+    <button type="button" class="ishq-tone blue-tone selected" data-ishq-tone="0" aria-pressed="true">Royal Blue</button>
+    <button type="button" class="ishq-tone crystal-tone" data-ishq-tone="1" aria-pressed="false">Crystal Clear</button>
+  </div>`;
+}
+
 function renderProducts() {
   const selectedView = collectionViews[currentFilter];
   const selectedCategories = selectedView?.categories; const shown = selectedCategories === null ? products : products.filter(product => (selectedCategories ?? [currentFilter]).includes(product.category));
@@ -192,7 +207,7 @@ function renderProducts() {
         ${productVisual(product)}
       </div>
       <div class="product-info">
-        <div><h3>${product.name}</h3><p>${product.category}</p>${product.royal ? '<p class="royal-note">Limited royal collection</p>' : ''}${product.variants ? '<p class="variant-preview">Single · Set of 2 · Set of 3</p>' : ''}${product.id === 'heer-1' ? heerTonePicker() : ''}</div>
+        <div><h3>${product.name}</h3><p>${product.category}</p>${product.royal ? '<p class="royal-note">Limited royal collection</p>' : ''}${product.variants ? '<p class="variant-preview">Single · Set of 2 · Set of 3</p>' : ''}${product.id === 'heer-1' ? heerTonePicker() : ''}${product.id === 'ishq-pendant-set' ? ishqTonePicker() : ''}</div>
         <div class="product-price">${priceMarkup(product)}</div>
       </div>
     </article>`).join('');
@@ -228,7 +243,7 @@ function openQuickView(id) {
   const variants = product.variants ? `<div class="variant-list"><p>Choose your set</p>${product.variants.map(variant => `<div><span>${variant.label}</span><em>${variant.salePrice == null ? 'Price coming soon' : fmt(variant.salePrice)}</em></div>`).join('')}</div>` : '';
   const message = encodeURIComponent(`Hello Sanskar, I’m interested in buying ${product.name}.`);
   const action = `<div class="product-actions"><button class="button product-add" data-add="${product.id}">Add to bag <span>→</span></button><a class="product-whatsapp" href="https://wa.me/${BUSINESS_WHATSAPP}?text=${message}" target="_blank" rel="noreferrer">Order on WhatsApp ${whatsappIcon}</a></div>`;
-  document.querySelector('#dialog-content').innerHTML = `<div class="dialog-art ${product.image ? 'has-photo' : 'image-placeholder'}">${productVisual(product, 'dialog')}</div><div class="dialog-text"><p class="eyebrow">${product.category}</p><h2>${product.name}</h2><div class="dialog-price">${priceMarkup(product)}</div>${product.id === 'heer-1' ? heerTonePicker() : ''}<p>${product.note}</p>${variants}${action}</div>`;
+  document.querySelector('#dialog-content').innerHTML = `<div class="dialog-art ${product.image ? 'has-photo' : 'image-placeholder'}">${productVisual(product, 'dialog')}</div><div class="dialog-text"><p class="eyebrow">${product.category}</p><h2>${product.name}</h2><div class="dialog-price">${priceMarkup(product)}</div>${product.id === 'heer-1' ? heerTonePicker() : ''}${product.id === 'ishq-pendant-set' ? ishqTonePicker() : ''}<p>${product.note}</p>${variants}${action}</div>`;
   document.querySelector('#product-dialog').showModal();
 }
 
@@ -267,10 +282,23 @@ document.addEventListener('scroll', event => {
   gallery.nextElementSibling?.querySelectorAll('.gallery-dot').forEach((dot, index) => dot.classList.toggle('active', index === active));
   const scope = gallery.closest('.product') || document.querySelector('#dialog-content');
   scope?.querySelectorAll('[data-heer-tone]').forEach((button, index) => { button.classList.toggle('selected', index === active); button.setAttribute('aria-pressed', String(index === active)); });
+  scope?.querySelectorAll('[data-ishq-tone]').forEach((button, index) => { const selected = index === active && index < 2; button.classList.toggle('selected', selected); button.setAttribute('aria-pressed', String(selected)); });
 }, true);
-grid.addEventListener('click', event => { const tone = event.target.closest('[data-heer-tone]'); if (tone) { event.stopPropagation(); const gallery = tone.closest('.product')?.querySelector('[data-gallery]'); gallery?.scrollTo({ left: Number(tone.dataset.heerTone) * gallery.clientWidth, behavior: 'smooth' }); return; } const image = event.target.closest('.product-image[data-quick]'); if (image) openQuickView(image.dataset.quick); });
+grid.addEventListener('click', event => {
+  const heerTone = event.target.closest('[data-heer-tone]');
+  if (heerTone) { event.stopPropagation(); const gallery = heerTone.closest('.product')?.querySelector('[data-gallery]'); gallery?.scrollTo({ left: Number(heerTone.dataset.heerTone) * gallery.clientWidth, behavior: 'smooth' }); return; }
+  const ishqTone = event.target.closest('[data-ishq-tone]');
+  if (ishqTone) { event.stopPropagation(); const gallery = ishqTone.closest('.product')?.querySelector('[data-gallery]'); gallery?.scrollTo({ left: Number(ishqTone.dataset.ishqTone) * gallery.clientWidth, behavior: 'smooth' }); return; }
+  const image = event.target.closest('.product-image[data-quick]'); if (image) openQuickView(image.dataset.quick);
+});
 grid.addEventListener('keydown', event => { const image = event.target.closest('.product-image[data-quick]'); if (!image || (event.key !== 'Enter' && event.key !== ' ')) return; event.preventDefault(); openQuickView(image.dataset.quick); });
-document.querySelector('#product-dialog').addEventListener('click', event => { const tone = event.target.closest('[data-heer-tone]'); if (tone) { const gallery = document.querySelector('#dialog-content [data-gallery]'); gallery?.scrollTo({ left: Number(tone.dataset.heerTone) * gallery.clientWidth, behavior: 'smooth' }); return; } if (event.target.matches('.dialog-close')) event.currentTarget.close(); const add = event.target.closest('[data-add]'); if (add) { addToCart(add.dataset.add); event.currentTarget.close(); } });
+document.querySelector('#product-dialog').addEventListener('click', event => {
+  const heerTone = event.target.closest('[data-heer-tone]');
+  const ishqTone = event.target.closest('[data-ishq-tone]');
+  const tone = heerTone || ishqTone;
+  if (tone) { const gallery = document.querySelector('#dialog-content [data-gallery]'); const index = Number(heerTone ? heerTone.dataset.heerTone : ishqTone.dataset.ishqTone); gallery?.scrollTo({ left: index * gallery.clientWidth, behavior: 'smooth' }); return; }
+  if (event.target.matches('.dialog-close')) event.currentTarget.close(); const add = event.target.closest('[data-add]'); if (add) { addToCart(add.dataset.add); event.currentTarget.close(); }
+});
 document.querySelector('#cart-items').addEventListener('click', event => { const button = event.target.closest('[data-remove]'); if (button) { cart = cart.filter(item => item.id !== button.dataset.remove); updateCart(); } });
 document.querySelector('#checkout-button').addEventListener('click', () => {
   if (!cart.length) return showToast('Add a piece to your bag first.');
