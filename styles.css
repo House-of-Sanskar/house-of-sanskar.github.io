@@ -664,10 +664,10 @@ dialog{max-width:min(900px,calc(100% - 30px));max-height:92vh;overflow-y:auto}
  .hero-slide-dil{
    display:block;padding:0;
    background-image:
-     linear-gradient(180deg,rgba(246,242,233,0) 0%,rgba(246,242,233,.05) 23%,#f6f2e9 42%,#f6f2e9 100%),
-     url('assets/products/dil-hero.jpg');
-   background-size:100% 100%,210% auto;
-   background-position:center,right top;
+     linear-gradient(180deg,rgba(246,242,233,0) 0%,rgba(246,242,233,.03) 36%,rgba(246,242,233,.55) 52%,#f6f2e9 62%,#f6f2e9 100%),
+     url('assets/products/dil-hero-mobile.jpg');
+   background-size:100% 100%,92% auto;
+   background-position:center,center top;
    background-repeat:no-repeat;
    background-color:#f6f2e9
  }
