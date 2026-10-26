@@ -634,3 +634,56 @@ dialog{max-width:min(900px,calc(100% - 30px));max-height:92vh;overflow-y:auto}
   object-position:center;
   background:#17110b;
 }
+
+
+/* Dil's product-only photograph fills the hero; its open left side carries the offer. */
+.hero-slide-dil{
+  display:block;
+  background-image:
+    linear-gradient(90deg,rgba(255,252,245,.96) 0%,rgba(255,252,245,.86) 33%,rgba(255,252,245,.22) 62%,rgba(255,252,245,.02) 100%),
+    url('assets/products/dil-hero.jpg');
+  background-size:100% 100%,cover;
+  background-position:center,center;
+  background-repeat:no-repeat;
+  background-color:#f4eee2
+}
+.hero-slide-dil .hero-offer-copy{
+  position:absolute;left:clamp(28px,8vw,120px);top:50%;
+  max-width:530px;transform:translateY(-50%)
+}
+.hero-slide-dil .hero-offer-copy .eyebrow{color:#98743b}
+.hero-slide-dil .hero-offer-copy h2{
+  color:#20170f;text-shadow:none;
+  font-family:'Bodoni Moda','Times New Roman',serif
+}
+.hero-slide-dil .hero-offer-line{color:#493b2c}
+.hero-slide-dil .hero-offer-line strong{color:#9a7134;text-shadow:none}
+.hero-slide-dil .hero-text{color:#493f34}
+.hero-slide-dil .hero-product-frame{display:none!important}
+@media(max-width:760px){
+ .hero-slide-dil{
+   display:block;padding:0;
+   background-image:
+     linear-gradient(180deg,rgba(246,242,233,0) 0%,rgba(246,242,233,.05) 23%,#f6f2e9 42%,#f6f2e9 100%),
+     url('assets/products/dil-hero.jpg');
+   background-size:100% 100%,125% auto;
+   background-position:center,right top;
+   background-repeat:no-repeat;
+   background-color:#f6f2e9
+ }
+ .hero-slide-dil .hero-offer-copy{
+   position:absolute;left:20px;right:20px;top:auto;bottom:72px;
+   transform:none;max-width:450px
+ }
+ .hero-slide-dil .hero-offer-copy .eyebrow{color:#98743b}
+ .hero-slide-dil .hero-offer-copy h2{font-size:clamp(36px,9.5vw,49px);margin:7px 0 10px;color:#20170f}
+ .hero-slide-dil .hero-offer-line{font-size:clamp(16px,4.5vw,21px);color:#493b2c}
+ .hero-slide-dil .hero-offer-line strong{color:#9a7134}
+ .hero-slide-dil .hero-text{font-size:12px;line-height:1.65;margin:0 0 10px;color:#493f34}
+ .hero-slide-dil .hero-cta{width:auto;min-width:180px;margin-top:2px;padding:11px 15px}
+ .hero-slide-dil .hero-product-frame{display:none!important}
+}
+@media(max-width:390px){
+ .hero-slide-dil .hero-offer-copy{left:16px;right:16px;bottom:68px}
+ .hero-slide-dil .hero-offer-copy h2{font-size:35px}
+}
