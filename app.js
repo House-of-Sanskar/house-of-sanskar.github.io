@@ -84,6 +84,17 @@ const products = [
     note: 'A delicate silver-tone heart pendant with a silver-plated chain and matching heart-shaped studs. A sweet, easy-to-wear set for everyday sparkle and thoughtful gifting.'
   },
   {
+    id: 'madhuri-pendant', name: 'Madhuri Pendant', category: 'Only Pendant',
+    originalPrice: 599, salePrice: 399, image: 'assets/products/madhuri-gold-detail.jpg',
+    images: ['assets/products/madhuri-gold-detail.jpg', 'assets/products/madhuri-gold-box.jpg', 'assets/products/madhuri-silver-box.jpg', 'assets/products/madhuri-silver-detail.jpg', 'assets/products/madhuri-model.jpg'],
+    finishVariants: {
+      Gold: { originalPrice: 599, salePrice: 399, startIndex: 0 },
+      Silver: { originalPrice: 549, salePrice: 349, startIndex: 2 }
+    },
+    selectedFinish: 'Gold',
+    note: 'A delicate key-shaped pendant with sparkling stones, available in gold and silver finishes. The gallery includes close-up and presentation-box photos for both finishes, followed by the model photo.'
+  },
+  {
     id: 'shagun-1', name: 'Shagun Necklace Set', category: 'Necklaces',
     originalPrice: 2499, salePrice: 1799, image: 'assets/products/shagun.jpg',
     note: 'A statement necklace set with a flower of ruby-pink stones at its heart and a graceful teardrop pendant, wrapped in rows of dazzling white stones on a warm gold finish. Matching drop earrings complete the look. Made for weddings, sangeet nights and every occasion that deserves a little shagun.'
@@ -125,17 +136,6 @@ const products = [
     salePrice: 149, image: 'assets/products/jodi.jpg', images: ['assets/products/jodi.jpg', 'assets/products/jodi-box.jpg'],
     note: 'A double-band gold-finish ring with a delicate center stone and two rows of fine sparkling stones. It looks like a stacked pair but sits as one, bringing a refined, everyday shine to any hand. Comes in a bow-tied gift box.'
   },
-  {
-    id: 'madhuri-pendant', name: 'Madhuri Pendant', category: 'Only Pendant',
-    originalPrice: 599, salePrice: 399, image: 'assets/products/madhuri-gold-detail.jpg',
-    images: ['assets/products/madhuri-gold-detail.jpg', 'assets/products/madhuri-gold-box.jpg', 'assets/products/madhuri-silver-box.jpg', 'assets/products/madhuri-silver-detail.jpg', 'assets/products/madhuri-model.jpg'],
-    finishVariants: {
-      Gold: { originalPrice: 599, salePrice: 399, startIndex: 0 },
-      Silver: { originalPrice: 549, salePrice: 349, startIndex: 2 }
-    },
-    selectedFinish: 'Gold',
-    note: 'A delicate key-shaped pendant with sparkling stones, available in gold and silver finishes. The gallery includes close-up and presentation-box photos for both finishes, followed by the model photo.'
-  }
 ];
 let cart = [];
 let currentFilter = 'All';
@@ -330,8 +330,8 @@ document.addEventListener('scroll', event => {
   const scope = gallery.closest('.product') || document.querySelector('#dialog-content');
   scope?.querySelectorAll('[data-heer-tone]').forEach((button, index) => { button.classList.toggle('selected', index === active); button.setAttribute('aria-pressed', String(index === active)); });
   scope?.querySelectorAll('[data-ishq-tone]').forEach((button, index) => { const selected = index === active && index < 2; button.classList.toggle('selected', selected); button.setAttribute('aria-pressed', String(selected)); });
-  if (scope?.querySelector('[data-madhuri-tone]') && active < 4) {
-    const finish = active < 2 ? 'Gold' : 'Silver';
+  if (scope?.querySelector('[data-madhuri-tone]') && (active === 0 || active === 2)) {
+    const finish = active === 0 ? 'Gold' : 'Silver';
     const product = products.find(item => item.id === 'madhuri-pendant');
     if (product && product.selectedFinish !== finish) setMadhuriFinish(product, finish, scope);
   }
