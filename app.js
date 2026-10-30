@@ -124,6 +124,17 @@ const products = [
     id: 'jodi-1', name: 'Jodi Double-Band Ring', category: 'Rings',
     salePrice: 149, image: 'assets/products/jodi.jpg', images: ['assets/products/jodi.jpg', 'assets/products/jodi-box.jpg'],
     note: 'A double-band gold-finish ring with a delicate center stone and two rows of fine sparkling stones. It looks like a stacked pair but sits as one, bringing a refined, everyday shine to any hand. Comes in a bow-tied gift box.'
+  },
+  {
+    id: 'madhuri-pendant', name: 'Madhuri Pendant', category: 'Only Pendant',
+    originalPrice: 599, salePrice: 399, image: 'assets/products/madhuri-gold-detail.jpg',
+    images: ['assets/products/madhuri-gold-detail.jpg', 'assets/products/madhuri-gold-box.jpg', 'assets/products/madhuri-silver-box.jpg', 'assets/products/madhuri-silver-detail.jpg', 'assets/products/madhuri-model.jpg'],
+    finishVariants: {
+      Gold: { originalPrice: 599, salePrice: 399, startIndex: 0 },
+      Silver: { originalPrice: 549, salePrice: 349, startIndex: 2 }
+    },
+    selectedFinish: 'Gold',
+    note: 'A delicate key-shaped pendant with sparkling stones, available in gold and silver finishes. The gallery includes close-up and presentation-box photos for both finishes, followed by the model photo.'
   }
 ];
 let cart = [];
@@ -137,6 +148,7 @@ const collectionViews = {
   'Bracelet Chains': { categories: ['Bracelet Chains'], title: 'Bracelet<br />chains.', kicker: 'Bracelet edit' },
   Bracelets: { categories: ['Elite Bracelets', 'Bracelet Chains'], title: 'Bracelet<br />edits.', kicker: 'Sanskar collection' },
   'Pendant Sets': { categories: ['Pendant Sets'], title: 'Pendant<br />sets.', kicker: 'Sanskar collection' },
+  'Only Pendant': { categories: ['Only Pendant'], title: 'Only<br />pendants.', kicker: 'Pendant edit' },
   Riwaayat: { categories: ['Riwaayat Collection'], title: 'Riwaayat<br />collection.', kicker: 'The royal edit' },
   'Royal Earrings': { categories: ['Royal Earrings'], title: 'Royal<br />earrings.', kicker: 'Earring edit' },
   'Earring Sets': { categories: ['Earring Sets'], title: 'Earring<br />sets.', kicker: 'Earring edit' },
@@ -199,6 +211,35 @@ function ishqTonePicker() {
   </div>`;
 }
 
+
+function madhuriFinishPicker(product) {
+  const goldSelected = (product.selectedFinish || 'Gold') === 'Gold';
+  return `<div class="madhuri-finish-picker" aria-label="Choose Madhuri finish">
+    <span>Choose finish</span>
+    <button type="button" class="madhuri-finish gold-finish${goldSelected ? ' selected' : ''}" data-madhuri-tone="Gold" aria-pressed="${goldSelected}">Gold</button>
+    <button type="button" class="madhuri-finish silver-finish${goldSelected ? '' : ' selected'}" data-madhuri-tone="Silver" aria-pressed="${!goldSelected}">Silver</button>
+  </div>`;
+}
+function setMadhuriFinish(product, finish, scope) {
+  const variant = product.finishVariants?.[finish];
+  if (!variant) return;
+  product.selectedFinish = finish;
+  product.originalPrice = variant.originalPrice;
+  product.salePrice = variant.salePrice;
+  scope?.querySelectorAll('[data-madhuri-tone]').forEach(button => {
+    const selected = button.dataset.madhuriTone === finish;
+    button.classList.toggle('selected', selected);
+    button.setAttribute('aria-pressed', String(selected));
+  });
+  const price = scope?.querySelector('.product-price, .dialog-price');
+  if (price) price.innerHTML = priceMarkup(product);
+  const card = grid.querySelector(`.product [data-quick="${product.id}"]`)?.closest('.product');
+  const cardPrice = card?.querySelector('.product-price');
+  if (cardPrice && cardPrice !== price) cardPrice.innerHTML = priceMarkup(product);
+  const gallery = scope?.querySelector('[data-gallery]');
+  if (gallery) gallery.scrollTo({ left: variant.startIndex * gallery.clientWidth, behavior: 'smooth' });
+}
+
 function renderProducts() {
   const selectedView = collectionViews[currentFilter];
   const selectedCategories = selectedView?.categories; const shown = selectedCategories === null ? products : products.filter(product => (selectedCategories ?? [currentFilter]).includes(product.category));
@@ -208,7 +249,7 @@ function renderProducts() {
         ${productVisual(product)}
       </div>
       <div class="product-info">
-        <div><h3>${product.name}</h3><p>${product.category}</p>${product.royal ? '<p class="royal-note">Limited royal collection</p>' : ''}${product.variants ? '<p class="variant-preview">Single · Set of 2 · Set of 3</p>' : ''}${product.id === 'heer-1' ? heerTonePicker() : ''}${product.id === 'ishq-pendant-set' ? ishqTonePicker() : ''}</div>
+        <div><h3>${product.name}</h3><p>${product.category}</p>${product.royal ? '<p class="royal-note">Limited royal collection</p>' : ''}${product.variants ? '<p class="variant-preview">Single · Set of 2 · Set of 3</p>' : ''}${product.id === 'heer-1' ? heerTonePicker() : ''}${product.id === 'ishq-pendant-set' ? ishqTonePicker() : ''}${product.id === 'madhuri-pendant' ? madhuriFinishPicker(product) : ''}</div>
         <div class="product-price">${priceMarkup(product)}</div>
       </div>
     </article>`).join('');
@@ -244,8 +285,13 @@ function openQuickView(id) {
   const variants = product.variants ? `<div class="variant-list"><p>Choose your set</p>${product.variants.map(variant => `<div><span>${variant.label}</span><em>${variant.salePrice == null ? 'Price coming soon' : fmt(variant.salePrice)}</em></div>`).join('')}</div>` : '';
   const message = encodeURIComponent(`Hello Sanskar, I’m interested in buying ${product.name}.`);
   const action = `<div class="product-actions"><button class="button product-add" data-add="${product.id}">Add to bag <span>→</span></button><a class="product-whatsapp" href="https://wa.me/${BUSINESS_WHATSAPP}?text=${message}" target="_blank" rel="noreferrer">Order on WhatsApp ${whatsappIcon}</a></div>`;
-  document.querySelector('#dialog-content').innerHTML = `<div class="dialog-art ${product.image ? 'has-photo' : 'image-placeholder'}">${productVisual(product, 'dialog')}</div><div class="dialog-text"><p class="eyebrow">${product.category}</p><h2>${product.name}</h2><div class="dialog-price">${priceMarkup(product)}</div>${product.id === 'heer-1' ? heerTonePicker() : ''}${product.id === 'ishq-pendant-set' ? ishqTonePicker() : ''}<p>${product.note}</p>${variants}${action}</div>`;
+  document.querySelector('#dialog-content').innerHTML = `<div class="dialog-art ${product.image ? 'has-photo' : 'image-placeholder'}">${productVisual(product, 'dialog')}</div><div class="dialog-text"><p class="eyebrow">${product.category}</p><h2>${product.name}</h2><div class="dialog-price">${priceMarkup(product)}</div>${product.id === 'heer-1' ? heerTonePicker() : ''}${product.id === 'ishq-pendant-set' ? ishqTonePicker() : ''}${product.id === 'madhuri-pendant' ? madhuriFinishPicker(product) : ''}<p>${product.note}</p>${variants}${action}</div>`;
   document.querySelector('#product-dialog').showModal();
+  if (product.finishVariants) requestAnimationFrame(() => {
+    const gallery = document.querySelector('#dialog-content [data-gallery]');
+    const startIndex = product.finishVariants[product.selectedFinish || 'Gold'].startIndex;
+    if (gallery) gallery.scrollLeft = startIndex * gallery.clientWidth;
+  });
 }
 
 function closeSearch() { document.querySelector('#search-panel').classList.remove('open'); document.querySelector('#search-panel').setAttribute('aria-hidden', 'true'); }
@@ -284,10 +330,21 @@ document.addEventListener('scroll', event => {
   const scope = gallery.closest('.product') || document.querySelector('#dialog-content');
   scope?.querySelectorAll('[data-heer-tone]').forEach((button, index) => { button.classList.toggle('selected', index === active); button.setAttribute('aria-pressed', String(index === active)); });
   scope?.querySelectorAll('[data-ishq-tone]').forEach((button, index) => { const selected = index === active && index < 2; button.classList.toggle('selected', selected); button.setAttribute('aria-pressed', String(selected)); });
+  if (scope?.querySelector('[data-madhuri-tone]') && active < 4) {
+    const finish = active < 2 ? 'Gold' : 'Silver';
+    const product = products.find(item => item.id === 'madhuri-pendant');
+    if (product && product.selectedFinish !== finish) setMadhuriFinish(product, finish, scope);
+  }
 }, true);
 grid.addEventListener('click', event => {
   const heerTone = event.target.closest('[data-heer-tone]');
   if (heerTone) { event.stopPropagation(); const gallery = heerTone.closest('.product')?.querySelector('[data-gallery]'); gallery?.scrollTo({ left: Number(heerTone.dataset.heerTone) * gallery.clientWidth, behavior: 'smooth' }); return; }
+  const madhuriTone = event.target.closest('[data-madhuri-tone]');
+  if (madhuriTone) {
+    event.stopPropagation();
+    setMadhuriFinish(products.find(item => item.id === 'madhuri-pendant'), madhuriTone.dataset.madhuriTone, madhuriTone.closest('.product'));
+    return;
+  }
   const ishqTone = event.target.closest('[data-ishq-tone]');
   if (ishqTone) { event.stopPropagation(); const gallery = ishqTone.closest('.product')?.querySelector('[data-gallery]'); gallery?.scrollTo({ left: Number(ishqTone.dataset.ishqTone) * gallery.clientWidth, behavior: 'smooth' }); return; }
   const image = event.target.closest('.product-image[data-quick]'); if (image) openQuickView(image.dataset.quick);
@@ -296,6 +353,11 @@ grid.addEventListener('keydown', event => { const image = event.target.closest('
 document.querySelector('#product-dialog').addEventListener('click', event => {
   const heerTone = event.target.closest('[data-heer-tone]');
   const ishqTone = event.target.closest('[data-ishq-tone]');
+  const madhuriTone = event.target.closest('[data-madhuri-tone]');
+  if (madhuriTone) {
+    setMadhuriFinish(products.find(item => item.id === 'madhuri-pendant'), madhuriTone.dataset.madhuriTone, document.querySelector('#dialog-content'));
+    return;
+  }
   const tone = heerTone || ishqTone;
   if (tone) { const gallery = document.querySelector('#dialog-content [data-gallery]'); const index = Number(heerTone ? heerTone.dataset.heerTone : ishqTone.dataset.ishqTone); gallery?.scrollTo({ left: index * gallery.clientWidth, behavior: 'smooth' }); return; }
   if (event.target.matches('.dialog-close')) event.currentTarget.close(); const add = event.target.closest('[data-add]'); if (add) { addToCart(add.dataset.add); event.currentTarget.close(); }
