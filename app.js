@@ -237,7 +237,13 @@ function setMadhuriFinish(product, finish, scope) {
   const cardPrice = card?.querySelector('.product-price');
   if (cardPrice && cardPrice !== price) cardPrice.innerHTML = priceMarkup(product);
   const gallery = scope?.querySelector('[data-gallery]');
-  if (gallery) gallery.scrollTo({ left: variant.startIndex * gallery.clientWidth, behavior: 'smooth' });
+  if (gallery) {
+    const targetSlide = gallery.querySelectorAll('.gallery-slide')[variant.startIndex];
+    if (targetSlide) {
+      gallery.scrollLeft = targetSlide.offsetLeft;
+      requestAnimationFrame(() => { gallery.scrollLeft = targetSlide.offsetLeft; });
+    }
+  }
 }
 
 function renderProducts() {
@@ -335,6 +341,14 @@ document.addEventListener('scroll', event => {
     const product = products.find(item => item.id === 'madhuri-pendant');
     if (product && product.selectedFinish !== finish) setMadhuriFinish(product, finish, scope);
   }
+}, true);
+document.addEventListener('click', event => {
+  const button = event.target.closest?.('[data-madhuri-tone]');
+  if (!button) return;
+  const product = products.find(item => item.id === 'madhuri-pendant');
+  const scope = button.closest('.product') || document.querySelector('#dialog-content');
+  setMadhuriFinish(product, button.dataset.madhuriTone, scope);
+  event.stopPropagation();
 }, true);
 grid.addEventListener('click', event => {
   const heerTone = event.target.closest('[data-heer-tone]');
